@@ -102,10 +102,10 @@ cron里的"\*/20 16,23 * * \*"代表 at every 20th minute past hour 16 and 23，
 
 
 ## Credit
-参考了[ipid/bupt-ncov-report](https://github.com/ipid/bupt-ncov-report) 与 [imtsuki/bupt-ncov-report-action](https://github.com/imtsuki/bupt-ncov-report-action), 十分感谢
+参考了[ipid/bupt-ncov-report](https://github.com/ipid/bupt-ncov-report) 与 [zzp-seeker/bupt-ncov-report-action](https://github.com/zzp-seeker/bupt-ncov-auto-report), 十分感谢
 
 ## License
-MIT © [zzp-seeker](https://github.com/zzp-seeker)
+MIT © [RunpuWei](https://github.com/RunpuWei)
 
 ### 好用的话别忘了:star:哦 :wink:
 
