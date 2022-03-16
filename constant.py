@@ -7,6 +7,9 @@ SERVER_KEY = os.environ['SERVER_KEY']
 LOGIN_API = 'https://app.bupt.edu.cn/uc/wap/login/check'
 GET_API = 'https://app.bupt.edu.cn/ncov/wap/default/index'
 REPORT_API = 'https://app.bupt.edu.cn/ncov/wap/default/save'
+GETEven_API = 'https://app.bupt.edu.cn/xisuncov/wap/open-report/index'
+POSTEven_API = 'https://app.bupt.edu.cn/xisuncov/wap/open-report/save'
+
 
 # 当今日没有填报时，在https://app.bupt.edu.cn/ncov/wap/default/index下进行填报，
 # 全部填完，不要提交，f12打开控制台，在Console页面下输入代码 console.log(vm.info) 就会得到以下信息，之后每天就默认填以下信息
