@@ -107,7 +107,7 @@ def ncov_even_report(username, password, name, is_useold):
 
         except:
             print("加载昨日数据错误，采用固定数据")
-            post_data = json.loads(copy.deepcopy(INFO).replace("\n", "").replace(" ", ""))
+            post_data = json.loads(copy.deepcopy(INFO_E).replace("\n", "").replace(" ", ""))
     report_res = session.post(
         POSTEven_API,
         data=post_data,
