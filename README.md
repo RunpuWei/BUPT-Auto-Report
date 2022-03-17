@@ -14,7 +14,7 @@
 - 支持晨午晚检
 - 运行失败会自动往邮箱（注册github所用邮箱）发送邮件
 - 可以多人同时填报（可以帮小伙伴一起打卡哦）
-- 填报情况可以使用上一次打卡数据（如需更换请于当日脚本运行前手动打卡），也可以使用固定数据（每日填报地点始终位于北邮，晨午晚检由于我现在不在北邮，现在写的是山东德州，等后面过两天再改吧。）
+- 填报情况可以使用上一次打卡数据（如需更换请于当日脚本运行前手动打卡），也可以使用固定数据（填报地点始终位于北邮西土城校区）
 - **（可选）** 填报结果自动推送至微信
   ​
 
@@ -82,7 +82,6 @@
 <img src="img/9.png" width="95%">
 </div>
 
-若想查看上图一样具体填报信息需要取消注释main.py的75行
 
 **恭喜你，你还有你的小伙伴不用为被催打卡而烦恼了~**
 
@@ -95,14 +94,16 @@ on:
   schedule:
     - cron: "*/30 */4 * * *"
 ```
-cron里的"*/30 */4 * * *"代表 At every 30th minute past every 4th hour 注意github服务器是UTC，北京时间是UTC +8 ，所以如果要自己改时间打卡，请注意打卡时间写提前8小时（例如北京时间12点，写成4点）
-[https://crontab.guru/#*/10_16,23_*_*_*](https://crontab.guru/#*/10_16,23_*_*_*) 用这个网站来选取你想要的时间
-### 更改打卡的固定数据
+cron里的"*/30 */4 * * *"代表 At every 30th minute past every 4th hour ，注意github服务器时间是UTC，北京时间是UTC +8 ，所以如果要自己改时间打卡，请注意打卡时间写提前8小时（例如北京时间12点，写成4点）
+[https://crontab.guru/#/30_*/4_*_*_*](https://crontab.guru/#/30_*/4_*_*_*) 用这个网站来选取你想要的时间
+### 更改每日填报的固定数据
 在 [https://app.bupt.edu.cn/ncov/wap/default/index](https://app.bupt.edu.cn/ncov/wap/default/index) 进行填报，全部填完后最后不要提交，f12打开控制台，在Console页面下输入代码vm.info回车得到填报数据，替换掉 constant.py 里的INFO变量
+### 更改晨午晚填报的固定数据
+直接打开 [https://app.bupt.edu.cn/xisuncov/wap/open-report/index](https://app.bupt.edu.cn/xisuncov/wap/open-report/index) ，根据显示数据修改 constant.py 里的INFO_E变量
 
 
 ## Credit
-项目修改自 [zzp-seeker/bupt-ncov-report-action](https://github.com/zzp-seeker/bupt-ncov-auto-report), 十分感谢
+项目修改自 [zzp-seeker/bupt-ncov-report-action](https://github.com/zzp-seeker/bupt-ncov-auto-report), 十分感谢！
 
 ## License
 MIT © [RunpuWei](https://github.com/RunpuWei)
