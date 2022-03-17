@@ -5,7 +5,7 @@ import requests, re, json, copy, traceback
 
 
 session = requests.Session()
-
+wecom_cid,wecom_aid,wecom_secret=WECOM
 
 def ncov_report(username, password, name, is_useold):
     print('登录北邮 nCoV 上报网站')
@@ -129,9 +129,9 @@ for user in  USERS:
         success = False
         data,res = '',traceback.format_exc()
     
-    msg1=f'{name}《每日填报》填报成功!服务器返回数据:\n{res}' if success else f'{name}《每日填报》填报失败!发生如下异常:\n{res}'
+    msg1=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《每日填报》填报成功!服务器返回数据:\n{res}\n\n每日填报填报数据:\n{data}\n' if success else f'{name}《每日填报》填报失败!发生如下异常:\n{res}'
     print(msg1)
-
+    send_to_wecom(msg1,wecom_cid, wecom_aid, wecom_secret)
     # print(f'填报数据:\n{data}\n')
     successs+=[success]
     ress+=[res]
@@ -146,11 +146,8 @@ for user in  USERS:
         success = False
         data,res = '',traceback.format_exc()
 
-    msg2=f'{name}《晨午晚检》填报成功!服务器返回数据:\n{res}' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
+    msg2=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《晨午晚检》填报成功!服务器返回数据:\n{res}\n\n晨午晚检填报数据:\n{data}\n' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
     print(msg2)
+    send_to_wecom(msg2,wecom_cid, wecom_aid, wecom_secret)
 
-    msg=f'(*^▽^*) {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}'+"打卡完成！\n\n"+msg1+"\n\n"+msg2
     
-    #发送消息推送
-    wecom_cid,wecom_aid,wecom_secret=WECOM
-    send_to_wecom(msg,wecom_cid, wecom_aid, wecom_secret)
