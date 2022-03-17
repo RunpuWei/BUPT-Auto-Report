@@ -28,4 +28,4 @@ jobs:
           python3 main.py
         env:
           USERS: ${{ secrets.USERS }}
-          SERVER_KEY: ${{ secrets.SERVER_KEY }}
+          WECOM: ${{ secrets.WECOM }}
