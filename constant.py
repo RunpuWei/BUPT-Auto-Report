@@ -7,7 +7,6 @@ import os
 USERS=[("学号","密码","姓名/昵称",0)]
 WECOM=("企业ID③", "应用ID①", "应用secret②")
 """
-
 USERS = eval(os.environ['USERS'])
 WECOM = eval(os.environ['WECOM'])
 
