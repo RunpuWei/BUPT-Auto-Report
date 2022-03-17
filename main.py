@@ -149,5 +149,3 @@ for user in  USERS:
     msg2=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《晨午晚检》填报成功!服务器返回数据:\n{res}\n\n晨午晚检填报数据:\n{data}\n' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
     print(msg2)
     send_to_wecom(msg2,wecom_cid, wecom_aid, wecom_secret)
-
-    
