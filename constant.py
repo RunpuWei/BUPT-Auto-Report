@@ -74,11 +74,11 @@ INFO = r"""{
 INFO_E = r"""{
     "sfzx": "0",
     "tw":"1",
-    "area":"山东省 德州市 临邑县",
-    "city":"德州市",
-    "province":"山东省",
-    "address":"山东省德州市临邑县邢侗街道德州菲米广告传媒有限公司西关新居",
-    "geo_api_info": "{\"type\":\"complete\",\"info\":\"SUCCESS\",\"status\":1,\"fEa\":\"jsonp_940261_\",\"position\":{\"Q\":37.195,\"R\":116.85854,\"lng\":116.85854,\"lat\":37.195},\"message\":\"Get geolocation time out.Get ipLocation success.Get address success.\",\"location_type\":\"ip\",\"accuracy\":null,\"isConverted\":true,\"addressComponent\":{\"citycode\":\"0534\",\"adcode\":\"371424\",\"businessAreas\":[],\"neighborhoodType\":\"\",\"neighborhood\":\"\",\"building\":\"\",\"buildingType\":\"\",\"street\":\"渤海路\",\"streetNumber\":\"23号\",\"country\":\"中国\",\"province\":\"山东省\",\"city\":\"德州市\",\"district\":\"临邑县\",\"towncode\":\"371424002000\",\"township\":\"邢侗街道\"},\"formattedAddress\":\"山东省德州市临邑县邢侗街道德州菲米广告传媒有限公司西关新居\",\"roads\":[],\"crosses\":[],\"pois\":[]}",
+    "area":"北京市  海淀区",
+    "city":"北京市",
+    "province":"北京市",
+    "address":"北京市海淀区北太平庄街道北京邮电大学计算机学院北京邮电大学海淀校区",
+    "geo_api_info": "{\"type\":\"complete\",\"info\":\"SUCCESS\",\"status\":1,\"fEa\":\"jsonp_940261_\",\"position\":{\"Q\":39.960,\"R\":116.35640,\"lng\":116.356340,\"lat\":39.960},\"message\":\"Get geolocation time out.Get ipLocation success.Get address success.\",\"location_type\":\"ip\",\"accuracy\":null,\"isConverted\":true,\"addressComponent\":{\"citycode\":\"010\",\"adcode\":\"110108\",\"businessAreas\":[],\"neighborhoodType\":\"科教文化服务;学校;高等院校\",\"neighborhood\":\"北京邮电大学\",\"building\":\"北京邮电大学计算机学院\",\"buildingType\":\"科教文化服务;学校;高等院校\",\"street\":\"西土城路\",\"streetNumber\":\"10号\",\"country\":\"中国\",\"province\":\"北京市\",\"city\":\"\",\"district\":\"海淀区\",\"towncode\":\"371424002000\",\"township\":\"北太平庄街道\"},\"formattedAddress\":\"北京市海淀区北太平庄街道北京邮电大学计算机学院北京邮电大学海淀校区\",\"roads\":[],\"crosses\":[],\"pois\":[]}",
     "sfcyglq": "0",
     "sfyzz": "0","qtqk": "","askforleave": "0"
     }"""
