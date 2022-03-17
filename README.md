@@ -52,7 +52,11 @@
 
 
 4. 第二个secret的Name填写**WECOM**，如果不配置微信推送，那么Value里填写 **("0","0","0")** 即可，如果想配置的话看下一点
-5. **（可选）** Value填写 **("企业ID", "应用ID agentid", "应用 secret")** （注意都写成字符串形式，加引号！！！）具体配置说明在这里查看 [https://github.com/easychen/wecomchan](Wecom酱——企业微信应用消息配置说明)），在此之前需要微信注册企业号，并自定义创建一个应用，对照上述链接内的前四步说明照做即可（第五步不用管，只做前四步获取你的企业ID、应用ID、应用secret）。
+5. **（可选）** Value填写 **("企业ID", "应用ID agentid", "应用 secret")** ，Value按照如下格式填写（注意都写成字符串形式，加引号！！！）：
+```python
+("ww52940bxxxxxxxxxx", "1000001", "xxxxxxfOpyabbbbHo-xxxxxxxxxx6BfAgcbaaaaaaaa")
+```
+具体配置说明在这里查看 [https://github.com/easychen/wecomchan](Wecom酱——企业微信应用消息配置说明)），在此之前需要微信注册企业号，并自定义创建一个应用，对照上述链接内的前四步说明照做即可（第五步不用管，只做前四步获取你的企业ID、应用ID、应用secret）。
 
 最后Actions secrets效果：
 
