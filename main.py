@@ -99,11 +99,12 @@ def ncov_even_report(username, password, name, is_useold):
             #area = province + " " + city + " " + geo['addressComponent']['district']
             area = province+city+district
             address = geo['formattedAddress']
-
+            post_data['geo_api_info']=info
             post_data['province'] = province
             post_data['city'] = city
             post_data['area'] = area
             post_data['address'] = address
+            
 
             # 强行覆盖一些字段
 
