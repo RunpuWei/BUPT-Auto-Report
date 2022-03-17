@@ -4,12 +4,12 @@ import os
 
 
 """
-USERS=[("2019212239","WeiRunpu12345","姓名/昵称",0)]
+USERS=[("学号","密码","姓名/昵称",0)]
 WECOM=("企业ID③", "应用ID①", "应用secret②")
 """
-USERS=[("2019212235","yuliyang991029","姓名/昵称",0)]
-#USERS = eval(os.environ['USERS'])
-#WECOM = eval(os.environ['WECOM'])
+
+USERS = eval(os.environ['USERS'])
+WECOM = eval(os.environ['WECOM'])
 
 
 LOGIN_API = 'https://app.bupt.edu.cn/uc/wap/login/check'
