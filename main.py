@@ -1,5 +1,5 @@
-from serverJiang import *
 from constant import *
+from Wecom import *
 
 import requests, re, json, copy, traceback
 
@@ -61,7 +61,6 @@ def ncov_report(username, password, name, is_useold):
         raise RuntimeError('report_res 状态码不是 200')
     return post_data,report_res.text
 
-
 def ncov_even_report(username, password, name, is_useold):
     print('登录北邮 nCoV 上报网站')
     login_res = session.post(
@@ -80,7 +79,7 @@ def ncov_even_report(username, password, name, is_useold):
     try:
         old_data = json.loads(get_res.text)
     except:
-        raise RuntimeError('未获取到上次打卡数据，请今日手动打卡明日再执行脚本或使用固定打卡数据')
+        raise RuntimeError('未获取到上次打卡数据，请先手动打卡下次再执行脚本')
     post_data = json.loads(copy.deepcopy(INFO_E))
     if is_useold:
         try:
@@ -106,7 +105,7 @@ def ncov_even_report(username, password, name, is_useold):
             # 强行覆盖一些字段
 
         except:
-            print("加载昨日数据错误，采用固定数据")
+            print("加载上次晨午晚检数据错误，采用固定数据")
             post_data = json.loads(copy.deepcopy(INFO_E).replace("\n", "").replace(" ", ""))
     report_res = session.post(
         POSTEven_API,
@@ -126,8 +125,10 @@ for user in  USERS:
     except:
         success = False
         data,res = '',traceback.format_exc()
+    
+    msg1=f'{name}《每日填报》填报成功!服务器返回数据:\n{res}' if success else f'{name}《每日填报》填报失败!发生如下异常:\n{res}'
+    print(msg1)
 
-    print(f'{name}每日填报填报成功!服务器返回数据:\n{res}' if success else f'{name}每日填报填报失败!发生如下异常:\n{res}')
     # print(f'填报数据:\n{data}\n')
     successs+=[success]
     ress+=[res]
@@ -142,20 +143,11 @@ for user in  USERS:
         success = False
         data,res = '',traceback.format_exc()
 
-    print(f'{name}晨午晚检填报成功!服务器返回数据:\n{res}' if success else f'{name}晨午晚检填报失败!发生如下异常:\n{res}')
-    successs+=[success]
-    ress+=[res]
-    datas+=[data]
-    usernames+=[username]
-    names+=[name]
+    msg2=f'{name}《晨午晚检》填报成功!服务器返回数据:\n{res}' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
+    print(msg2)
 
-
-try:
-    notifier = ServerJiangNotifier(
-        sckey=SERVER_KEY,
-        sess=requests.Session()
-    )
-    print(f'通过「{notifier.PLATFORM_NAME}」给用户发送通知')
-    notifier.notify(success=successs, msg=ress,data=datas,username=usernames,name=names)
-except:
-    print(r"可能由于 「SERVER_KEY未设置」 或 「SERVER_KEY不正确」 或 「网络波动」 ，SERVER酱发送失败")
+    msg=f'(*^▽^*) {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}'+"打卡完成！\n\n"+msg1+"\n\n"+msg2
+    
+    #发送消息推送
+    wecom_cid,wecom_aid,wecom_secret=WECOM
+    send_to_wecom(msg,wecom_cid, wecom_aid, wecom_secret)

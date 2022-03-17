@@ -15,7 +15,7 @@
 - 运行失败会自动往邮箱（注册github所用邮箱）发送邮件
 - 可以多人同时填报（可以帮小伙伴一起打卡哦）
 - 填报情况可以使用上一次打卡数据（如需更换请于当日脚本运行前手动打卡），也可以使用固定数据（地点始终位于北邮）
-- **（可选）** 填报结果通过Server酱推送至微信
+- **（可选）** 填报结果自动推送至微信
   ​
 
 <div align="center">
@@ -51,8 +51,8 @@
 </div>
 
 
-4. 第二个secret的Name填写**SERVER_KEY**，如果不配置Server酱微信推送，那么Value里填写**0**即可，如果想配置的话看下一点
-5. **（可选）** Value填写Server酱的SendKey（在这里查看 [https://sct.ftqq.com/sendkey](https://sct.ftqq.com/sendkey)），在此之前需要微信注册企业号，并加入Server酱内部应用，具体流程见 [https://sct.ftqq.com/forward](https://sct.ftqq.com/forward)，看起来比较多，但也不是很麻烦，一步步照做即可
+4. 第二个secret的Name填写**WECOM**，如果不配置微信推送，那么Value里填写 **(0,0,0)** 即可，如果想配置的话看下一点
+5. **（可选）** Value填写 **("企业ID", "应用ID agentid", "应用 secret")** 具体配置说明在这里查看 [https://github.com/easychen/wecomchan](Wecom酱——企业微信应用消息配置说明)），在此之前需要微信注册企业号，并自定义创建一个应用，对照上述链接内的前四步说明照做即可（第五步不用管，只做前四步获取你的企业ID、应用ID、应用secret）。
 
 最后Actions secrets效果：
 
@@ -93,7 +93,7 @@
 ```python
 on:
   schedule:
-    - cron: "*/20 16,23 * * *"
+    - cron: "*/30 */4 * * *"
 ```
 cron里的"\*/20 16,23 * * \*"代表 at every 20th minute past hour 16 and 23，然而这是UTC，北京时间为UTC+8，代表0点与7点之后每隔20分钟
 [https://crontab.guru/#*/10_16,23_*_*_*](https://crontab.guru/#*/10_16,23_*_*_*) 用这个网站来选取你想要的时间
