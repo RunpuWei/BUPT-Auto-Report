@@ -9,7 +9,7 @@ WECOM=("企业ID③", "应用ID①", "应用secret②")
 """
 
 USERS = eval(os.environ['USERS'])
-WECOM = os.environ['WECOM']
+WECOM = eval(os.environ['WECOM'])
 
 
 LOGIN_API = 'https://app.bupt.edu.cn/uc/wap/login/check'
