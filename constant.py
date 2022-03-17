@@ -6,23 +6,10 @@ import os
 """
 USERS=[("学号","密码","姓名/昵称",0)]
 WECOM=("企业ID③", "应用ID①", "应用secret②")
-USERS = eval(os.environ['USERS'])
-WECOM = eval(os.environ['WECOM'])
 """
 
-
-USERS =[
-    ("2019212239","WeiRunpu12345","卫闰朴",0),
-    ("2019212236","wl2301832000","魏澜",0),
-    ("2019212235","yuliyang991029","于力扬",0),
-    ("2019212261","499617zyn.","张勇",0),
-    ("2019212247","lioulimirou270","吴淑慧",0),
-    ("2020212106","08261017","郭鑫",0),
-    ("2019212249","2019212249myd","马乙丹",0),
-    ("2019211024","07030832","邓明康",0),
-]
-
-WECOM = ("ww52940bb7dd9c547a", "1000002", "f6DSLsfOpyaPnrqHo-mKPhCxifW96BfAgcb4RPF0l84")
+USERS = eval(os.environ['USERS'])
+WECOM = eval(os.environ['WECOM'])
 
 LOGIN_API = 'https://app.bupt.edu.cn/uc/wap/login/check'
 GET_API = 'https://app.bupt.edu.cn/ncov/wap/default/index'
