@@ -87,15 +87,18 @@ def ncov_even_report(username, password, name, is_useold):
                 if k in post_data:
                     post_data[k] = v
             geo = old_data
+            info=geo['d']['info']['geo_api_info']
+            geo=json.loads(info)
             
-            province = geo['d']['info']['province']
-            city = geo['d']['info']['city']
-            if geo['d']['info']['city'].strip() == "" and len(re.findall(r'北京市|上海市|重庆市|天津市', province)) != 0:
-                city = geo['d']['info']['province']
+            province = geo['addressComponent']['province']
+            city = geo['addressComponent']['city']
+            district=geo['addressComponent']['district']
+            if geo['addressComponent']['city'].strip() == "" and len(re.findall(r'北京市|上海市|重庆市|天津市', province)) != 0:
+                city = geo['addressComponent']['province']
             
             #area = province + " " + city + " " + geo['addressComponent']['district']
-            area = geo['d']['info']['area']
-            address = geo['d']['info']['address']
+            area = province+city+district
+            address = geo['formattedAddress']
 
             post_data['province'] = province
             post_data['city'] = city
