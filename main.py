@@ -70,16 +70,25 @@ def ncov_even_report(username, password, name, is_useold):
                  })
     if login_res.status_code != 200:
         raise RuntimeError('login_res 状态码不是 200')
+
+    get_res = session.get(
+        GET_API,
+        headers={**COMMON_HEADERS, 'Accept': HEADERS.ACCEPT_HTML},
+    )
+    if get_res.status_code != 200:
+        raise RuntimeError('get_res 状态码不是 200')
+    try:
+        old_data = json.loads('{' + re.search(r'(?<=oldInfo: {).+(?=})', get_res.text)[0] + '}')
+    except:
+        raise RuntimeError('未获取到昨日打卡数据，请今日手动打卡明日再执行脚本或使用固定打卡数据')
+
     get_res = session.get(
         GETEven_API,
         headers={**COMMON_HEADERS, 'Accept': HEADERS.ACCEPT_HTML},
     )
     if get_res.status_code != 200:
         raise RuntimeError('get_res 状态码不是 200')
-    try:
-        old_data = json.loads(get_res.text)
-    except:
-        raise RuntimeError('未获取到上次打卡数据，请先手动打卡下次再执行脚本')
+
     post_data = json.loads(copy.deepcopy(INFO_E))
     if is_useold:
         try:
@@ -87,7 +96,7 @@ def ncov_even_report(username, password, name, is_useold):
                 if k in post_data:
                     post_data[k] = v
             geo = old_data
-            info=geo['d']['info']['geo_api_info']
+            info=geo['geo_api_info']
             geo=json.loads(info)
             
             province = geo['addressComponent']['province']
