@@ -2,18 +2,15 @@ from constant import *
 from Wecom import *
 
 import requests, re, json, copy, traceback
+from lxml import etree
 
 
-session = requests.Session()
-wecom_cid,wecom_aid,wecom_secret=WECOM
-
-def ncov_report(username, password, name, is_useold):
+def ncov_report(data, headers, is_useold):
     print('登录北邮 nCoV 上报网站')
     login_res = session.post(
-        LOGIN_API,
-        data={'username': username, 'password': password, },
-        headers={**COMMON_HEADERS, **COMMON_POST_HEADERS, 'Referer': HEADERS.REFERER_LOGIN_API,
-                 })
+        url=LOGIN_API, headers=headers, data=data
+    )
+
     if login_res.status_code != 200:
         raise RuntimeError('login_res 状态码不是 200')
     get_res = session.get(
@@ -55,19 +52,17 @@ def ncov_report(username, password, name, is_useold):
     report_res = session.post(
         REPORT_API,
         data=post_data,
-        headers={**COMMON_HEADERS,**COMMON_POST_HEADERS,'Referer': HEADERS.REFERER_POST_API,},
+        headers=headers,
     )
     if report_res.status_code != 200:
         raise RuntimeError('report_res 状态码不是 200')
     return post_data,report_res.text
 
-def ncov_even_report(username, password, name, is_useold):
+def ncov_even_report(data,headers, is_useold):
     print('登录北邮 nCoV 上报网站')
     login_res = session.post(
-        LOGIN_API,
-        data={'username': username, 'password': password, },
-        headers={**COMMON_HEADERS, **COMMON_POST_HEADERS, 'Referer': HEADERS.REFERER_LOGIN_API,
-                 })
+        url=LOGIN_API, headers=headers, data=data
+    )
     if login_res.status_code != 200:
         raise RuntimeError('login_res 状态码不是 200')
 
@@ -116,14 +111,13 @@ def ncov_even_report(username, password, name, is_useold):
             
 
             # 强行覆盖一些字段
-
         except:
             print("加载上次晨午晚检数据错误，采用固定数据")
             post_data = json.loads(copy.deepcopy(INFO_E).replace("\n", "").replace(" ", ""))
     report_res = session.post(
         POSTEven_API,
         data=post_data,
-        headers={**COMMON_HEADERS,**COMMON_POST_HEADERS,'Referer': HEADERS.REFERER_POST_API,},
+        headers=headers,
     )
     if report_res.status_code != 200:
         raise RuntimeError('report_res 状态码不是 200')
@@ -131,14 +125,39 @@ def ncov_even_report(username, password, name, is_useold):
 
 successs,ress,usernames,names,datas = [],[],[],[],[]
 for user in  USERS:
-    success=True
+    # 设置连接
+    session = requests.Session()
+    wecom_cid,wecom_aid,wecom_secret=WECOM
+
+    # 发送请求，设置cookies
+    headers = { "User-Agent": USER_AGENT}
+    params = { "service": SERVICE }
+    responce = session.get(url=LOGIN_API, headers=headers, params=params)
+
+    # 获取execution
+    html = etree.HTML(responce.content)
+    execution = html.xpath(EXECUTION_XPATH)[0]
+
     username,password,name,useold=user
+	# 构造表单数据
+    data = {
+		'username': username,
+		'password': password,
+		'submit': "登录",
+		'type': 'username_password',
+		'execution': execution,
+		'_eventId': "submit"
+	}
+
+    success=True
     try:
-        data,res = ncov_report(username=username,password=password,name=name,is_useold=(useold==0))
+        data,res = ncov_report(data,headers,is_useold=(useold==0))
     except:
         success = False
         data,res = '',traceback.format_exc()
-    
+
+
+
     msg1=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《每日填报》填报成功!服务器返回数据:\n{res}\n\n每日填报填报数据:\n{data}\n' if success else f'{name}《每日填报》填报失败!发生如下异常:\n{res}'
     print(msg1)
     send_to_wecom(msg1,wecom_cid, wecom_aid, wecom_secret)
@@ -149,9 +168,8 @@ for user in  USERS:
     usernames+=[username]
     names+=[name]
 
-
     try:
-        data,res = ncov_even_report(username=username,password=password,name=name,is_useold=(useold==0))
+        data,res = ncov_even_report(data,headers,is_useold=(useold==0))
     except:
         success = False
         data,res = '',traceback.format_exc()

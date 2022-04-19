@@ -10,9 +10,15 @@ WECOM=("企业ID③", "应用ID①", "应用secret②")
 USERS = eval(os.environ['USERS'])
 WECOM = eval(os.environ['WECOM'])
 
-LOGIN_API = 'https://app.bupt.edu.cn/uc/wap/login/check'
+LOGIN_API = 'https://auth.bupt.edu.cn/authserver/login'
 GET_API = 'https://app.bupt.edu.cn/ncov/wap/default/index'
 REPORT_API = 'https://app.bupt.edu.cn/ncov/wap/default/save'
+# 重要: CAS认证的跳转地址记录
+SERVICE = 'https://app.bupt.edu.cn/a_bupt/api/sso/cas?redirect=https%3A%2F%2Fapp.bupt.edu.cn%2Fncov%2Fwap%2Fdefault%2Findex&from=wap'
+# 模拟浏览器信息
+USER_AGENT = 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0'
+# Execution信息的xpath
+EXECUTION_XPATH = '/html/body/div[1]/div/form/div[5]/input[2]/@value'
 GETEven_API = 'https://app.bupt.edu.cn/xisuncov/wap/open-report/index'
 POSTEven_API = 'https://app.bupt.edu.cn/xisuncov/wap/open-report/save'
 
@@ -114,22 +120,3 @@ COMMON_POST_HEADERS = {
     'X-Requested-With': HEADERS.REQUEST_WITH_XHR,
     'Content-Type': HEADERS.CONTENT_TYPE_UTF8,
 }
-
-
-class INotifier(metaclass=ABCMeta):
-    @property
-    @abstractmethod
-    def PLATFORM_NAME(self) -> str:
-        """
-        将 PLATFORM_NAME 设为类的 Class Variable，内容是通知平台的名字（用于打日志）。
-        如：PLATFORM_NAME = 'Telegram 机器人'
-        :return: 通知平台名
-        """
-    @abstractmethod
-    def notify(self, *, success, msg, data, username, name) -> None:
-        """
-        通过该平台通知用户操作成功的消息。失败时将抛出各种异常。
-        :param success: 表示是否成功
-        :param msg: 成功时表示服务器的返回值，失败时表示失败原因；None 表示没有上述内容
-        :return: None
-        """
