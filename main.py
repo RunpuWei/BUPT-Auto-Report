@@ -13,6 +13,7 @@ def ncov_report(data, headers, is_useold):
 
     if login_res.status_code != 200:
         raise RuntimeError('login_res 状态码不是 200')
+
     get_res = session.get(
         GET_API,
         headers={**COMMON_HEADERS, 'Accept': HEADERS.ACCEPT_HTML},
@@ -23,6 +24,7 @@ def ncov_report(data, headers, is_useold):
         old_data = json.loads('{' + re.search(r'(?<=oldInfo: {).+(?=})', get_res.text)[0] + '}')
     except:
         raise RuntimeError('未获取到昨日打卡数据，请今日手动打卡明日再执行脚本或使用固定打卡数据')
+    
     post_data = json.loads(copy.deepcopy(INFO).replace("\n", "").replace(" ", ""))
     if is_useold:
         try:
@@ -63,6 +65,7 @@ def ncov_even_report(data,headers, is_useold):
     login_res = session.post(
         url=LOGIN_API, headers=headers, data=data
     )
+
     if login_res.status_code != 200:
         raise RuntimeError('login_res 状态码不是 200')
 
@@ -152,28 +155,15 @@ for user in  USERS:
     success=True
     try:
         data,res = ncov_report(data,headers,is_useold=(useold==0))
+        data_even,res_even = ncov_even_report(data,headers,is_useold=(useold==0))
     except:
         success = False
         data,res = '',traceback.format_exc()
-
-
 
     msg1=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《每日填报》填报成功!服务器返回数据:\n{res}\n\n每日填报填报数据:\n{data}\n' if success else f'{name}《每日填报》填报失败!发生如下异常:\n{res}'
     print(msg1)
     send_to_wecom(msg1,wecom_cid, wecom_aid, wecom_secret)
-    # print(f'填报数据:\n{data}\n')
-    successs+=[success]
-    ress+=[res]
-    datas+=[data]
-    usernames+=[username]
-    names+=[name]
 
-    try:
-        data,res = ncov_even_report(data,headers,is_useold=(useold==0))
-    except:
-        success = False
-        data,res = '',traceback.format_exc()
-
-    msg2=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《晨午晚检》填报成功!服务器返回数据:\n{res}\n\n晨午晚检填报数据:\n{data}\n' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
+    msg2=f' {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")} {name}《晨午晚检》填报成功!服务器返回数据:\n{res_even}\n\n晨午晚检填报数据:\n{data_even}\n' if success else f'{name}《晨午晚检》填报失败!发生如下异常:\n{res}'
     print(msg2)
     send_to_wecom(msg2,wecom_cid, wecom_aid, wecom_secret)
